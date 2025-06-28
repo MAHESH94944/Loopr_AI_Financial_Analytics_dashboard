@@ -21,7 +21,7 @@ export const useAuthStore = create<AuthState>((set) => ({
   loading: true,
   login: async (email: string, password: string) => {
     try {
-      await api.post("/auth/login", { email, password });
+      await api.post("/api/auth/login", { email, password });
       await useAuthStore.getState().fetchUser();
     } catch (err: unknown) {
       if (err && typeof err === "object" && "response" in err) {
@@ -37,12 +37,12 @@ export const useAuthStore = create<AuthState>((set) => ({
     }
   },
   register: async (email: string, password: string) => {
-    await api.post("/auth/register", { email, password });
+    await api.post("/api/auth/register", { email, password });
     await useAuthStore.getState().login(email, password);
   },
   logout: async () => {
     try {
-      await api.post("/auth/logout");
+      await api.post("/api/auth/logout");
     } catch (err: unknown) {
       // Even if logout fails on server, clear local state
       console.warn("Logout request failed, but clearing local state:", err);
@@ -53,7 +53,7 @@ export const useAuthStore = create<AuthState>((set) => ({
   fetchUser: async () => {
     try {
       console.log("Fetching user...");
-      const res = await api.get("/auth/me");
+      const res = await api.get("/api/auth/me");
       console.log("User fetched successfully:", res.data);
       set({ user: res.data, loading: false });
     } catch (err: unknown) {
