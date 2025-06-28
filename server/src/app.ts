@@ -47,9 +47,20 @@ app.use(limiter);
 app.use("/api/auth", authRoutes);
 app.use("/api/transactions", transactionRoutes);
 
-// Health check
+// Health check routes
 app.get("/", (req: Request, res: Response) => {
   res.send("API is running");
+});
+
+app.get("/health", (req: Request, res: Response) => {
+  res.json({
+    status: "OK",
+    timestamp: new Date(),
+    uptime: process.uptime(),
+    environment: process.env.NODE_ENV || "development",
+    version: process.version,
+    service: "Financial Analytics API",
+  });
 });
 
 // 404 handler
