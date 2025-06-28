@@ -1,7 +1,9 @@
 import axios from "axios";
 
+import config from "../config";
+
 const api = axios.create({
-  baseURL: "https://loopr-ai-financial-analytics-dashboard-1.onrender.com/",
+  baseURL: config.apiUrl,
   withCredentials: true,
 });
 
